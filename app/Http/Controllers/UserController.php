@@ -1,23 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AnimalController extends Controller
+class UserController extends Controller
 {
+
+    public $animal = ['cat', 'fish', 'bird'];
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-        # Menginisialisasi dengan beberapa data hewan
-        $this->animal = new \Animal(['Kucing', 'Anjing', 'Ikan']);
-    }
-
     public function index()
     {
-        return response()->json($this->animal->index());
+        return $this->animal;
     }
 
     /**
@@ -25,7 +21,8 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->animal[] = $request->animal;
+        return $this->animal;
     }
 
     /**
@@ -41,7 +38,11 @@ class AnimalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (isset($this->animal[$id])) {
+            $this->animal[$id] = $request->animal;
+            return $this->animal;
+        }
+        return response()->json(['message' => 'Animal not found'], 404);
     }
 
     /**
@@ -49,6 +50,10 @@ class AnimalController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (isset($this->animal[$id])) {
+            unset($this->animal[$id]);
+            return $this->animal;
+        }
+        return response()->json(['message' => 'Animal not found'], 404);
     }
 }
