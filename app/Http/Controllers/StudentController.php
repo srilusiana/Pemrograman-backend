@@ -55,7 +55,11 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (isset($this->students[$id])) {
+            $this->students[$id] = $request->students;
+            return $this->students;
+        }
+        return response()->json(['message' => 'Student not found'], 404);
     }
 
     /**
@@ -63,6 +67,10 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (isset($this->students[$id])) {
+            unset($this->students[$id]);
+            return $this->students;
+        }
+        return response()->json(['message' => 'Student not found'], 404);
     }
 }
