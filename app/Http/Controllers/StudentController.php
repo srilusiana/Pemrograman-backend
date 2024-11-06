@@ -11,7 +11,7 @@ class StudentController extends Controller
         // Middleware untuk melindungi route dengan autentikasi Sanctum
         $this->middleware('auth:sanctum');
     }
-    
+
     public function index()
     {
         $students = Student::all();
@@ -33,8 +33,8 @@ class StudentController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'nim' => 'required|integer',
-            'email' => 'required|email',
+            'nim' => 'required|integer|unique:students',
+            'email' => 'required|email|unique:students',
             'majority' => 'required|string'
         ]);
 
@@ -69,8 +69,8 @@ class StudentController extends Controller
         // Validasi input yang diizinkan saat update
         $request->validate([
             'name' => 'required|string',
-            'nim' => 'required|integer' . $id,
-            'email' => 'required|email' . $id,
+            'nim' => 'required|integer|unique:students,nim,' . $id,
+            'email' => 'required|email|unique:students,email,' . $id,
             'majority' => 'required|string'
         ]);
 
