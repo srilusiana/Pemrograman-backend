@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        // Middleware untuk melindungi route dengan autentikasi Sanctum
+        $this->middleware('auth:sanctum');
+    }
+    
     public function index()
     {
         $students = Student::all();
