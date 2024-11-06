@@ -15,7 +15,7 @@ class StudentController extends Controller
 
         $response = [
             'data' => $students,
-            'message' => 'Berhasil menampilkan semua data student'
+            'message' => 'Berhasil menampilkan semua data students'
         ];
 
         return response()->json($response, 200);

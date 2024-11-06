@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    public $animal = ['cat', 'fish', 'bird'];
+    public $users = ['cat', 'fish', 'bird'];
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->animal;
+        return $this->users;
     }
 
     /**
@@ -21,8 +21,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->animal[] = $request->animal;
-        return $this->animal;
+        $this->users[] = $request->users;
+        return $this->users;
     }
 
     /**
@@ -38,11 +38,11 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (isset($this->animal[$id])) {
-            $this->animal[$id] = $request->animal;
-            return $this->animal;
+        if (isset($this->users[$id])) {
+            $this->users[$id] = $request->users;
+            return $this->users;
         }
-        return response()->json(['message' => 'Animal not found'], 404);
+        return response()->json(['message' => 'users not found'], 404);
     }
 
     /**
@@ -50,9 +50,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        if (isset($this->animal[$id])) {
-            unset($this->animal[$id]);
-            return $this->animal;
+        if (isset($this->users[$id])) {
+            unset($this->users[$id]);
+            return $this->users;
         }
         return response()->json(['message' => 'Animal not found'], 404);
     }
