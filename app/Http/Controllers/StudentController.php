@@ -13,12 +13,14 @@ class StudentController extends Controller
     {
         $students = Student::all();
 
-        $response = [
-            'data' => $students,
-            'message' => 'Berhasil menampilkan semua data students'
-        ];
+        if ($students->isEmpty()) {
+            return response()->json(['message' => 'No student data found'], 404);
+        }
 
-        return response()->json($response, 200);
+        return response()->json([
+            'message' => 'Success Showing All Students Data',
+            'data' => $students
+        ], 200);
     }
 
     /**
@@ -26,20 +28,20 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $input = [
-            'name' => $request->name,
-            'nim' => $request->nim,
-            'email' => $request->email,
-            'majority' => $request->majority
-        ];
-        
+        $request->validate([
+            'name' => 'required|string',
+            'nim' => 'required|integer',
+            'email' => 'required|email',
+            'majority' => 'required|string'
+        ]);
+
+        $input = $request->only(['name', 'nim', 'email', 'majority']);
         $students = Student::create($input);
-        
-        $response = [
-            'message' => 'Successfully create new student',
+
+        return response()->json([
+            'message' => 'Successfully created new student',
             'data' => $students
-        ];
-        return response()->json($response, 201);
+        ], 201);
     }
 
     /**
@@ -55,11 +57,27 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (isset($this->students[$id])) {
-            $this->students[$id] = $request->students;
-            return $this->students;
+        $students = Student::find($id);
+
+        if (!$students) {
+            return response()->json(['message' => 'Student not found'], 404);
         }
-        return response()->json(['message' => 'Student not found'], 404);
+
+        // Validasi input yang diizinkan saat update
+        $request->validate([
+            'name' => 'required|string',
+            'nim' => 'required|integer' . $id,
+            'email' => 'required|email' . $id,
+            'majority' => 'required|string'
+        ]);
+
+        // Update hanya field yang ada di request
+        $students->update($request->only(['name', 'nim', 'email', 'majority']));
+
+        return response()->json([
+            'message' => 'Student is updated',
+            'data' => $students
+        ], 200);
     }
 
     /**
@@ -67,10 +85,14 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        if (isset($this->students[$id])) {
-            unset($this->students[$id]);
-            return $this->students;
+        $students = Student::find($id);
+
+        if (!$students) {
+            return response()->json(['message' => 'Student not found'], 404);
         }
-        return response()->json(['message' => 'Student not found'], 404);
+
+        $students->delete();
+
+        return response()->json(['message' => 'Student is deleted'], 200);
     }
 }
