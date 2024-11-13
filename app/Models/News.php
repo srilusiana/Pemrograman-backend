@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
+<<<<<<< HEAD
     // Menentukan tabel yang digunakan model ini.
     protected $table = 'news';
 
@@ -14,3 +15,8 @@ class News extends Model
     protected $fillable = ['id', 'title', 'author', 'description', 'content', 'url', 'url_image', 'category', 'published_at', 'created_at', 'updated_at'];
 }
 
+=======
+    protected $table = 'news';
+    protected $fillable = ['id', 'title', 'author', 'description', 'content', 'url', 'url_image', 'category', 'published_at', 'created_at', 'updated_at'];
+}
+>>>>>>> 3bfa8005c0fb94a20eac2cf238e8a3516cfbf6de
