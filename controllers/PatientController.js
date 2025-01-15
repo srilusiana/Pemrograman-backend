@@ -52,6 +52,28 @@ class PatientController {
       res.status(404).json({ message: error.message }); // Menangani error jika pasien tidak ditemukan dan mengembalikan status 404
     }
   }
+
+  // Metode untuk mencari pasien berdasarkan kata kunci
+  async search(req, res) {
+    try {
+      const { keyword } = req.query; // Ambil keyword dari query parameter
+      const patients = await Patient.search(keyword); // Panggil model untuk mencari pasien
+      res.json(patients); // Kembalikan hasil pencarian dalam format JSON
+    } catch (error) {
+      res.status(500).json({ message: error.message }); // Tangani error dan kembalikan status 500
+    }
+  }
+
+  // Metode untuk mendapatkan pasien berdasarkan status
+  async getByStatus(req, res) {
+    try {
+      const { status } = req.params; // Ambil status dari parameter
+      const patients = await Patient.getByStatus(status); // Panggil model untuk mendapatkan pasien berdasarkan status
+      res.json(patients); // Kembalikan data pasien dalam format JSON
+    } catch (error) {
+      res.status(500).json({ message: error.message }); // Tangani error dan kembalikan status 500
+    }
+  }
 }
 
 // Mengekspor instance dari PatientController untuk digunakan dalam route

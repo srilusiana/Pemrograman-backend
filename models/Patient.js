@@ -71,6 +71,29 @@ class Patient {
       });
     });
   }
+
+  // Method untuk mencari pasien berdasarkan keyword
+  static search(keyword) {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM patients WHERE name LIKE ? OR email LIKE ?"; // Query pencarian
+      const likeKeyword = `%${keyword}%`; // Tambahkan wildcard untuk pencarian
+      db.query(sql, [likeKeyword, likeKeyword], (err, results) => {
+        if (err) reject(err); // Tangani error
+        resolve(results); // Resolusi promise dengan hasil pencarian
+      });
+    });
+  }
+
+  // Method untuk mendapatkan pasien berdasarkan status
+  static getByStatus(status) {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM patients WHERE status = ?"; // Query berdasarkan status
+      db.query(sql, [status], (err, results) => {
+        if (err) reject(err); // Tangani error
+        resolve(results); // Resolusi promise dengan hasil pencarian
+      });
+    });
+  }
 }
 
 // Ekspor class Patient untuk digunakan di file lain
