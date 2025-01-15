@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2025 at 08:55 AM
+-- Generation Time: Jan 15, 2025 at 10:16 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,7 @@ CREATE TABLE `patients` (
   `gender` enum('Male','Female') NOT NULL,
   `address` text NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `status` enum('Positive','Recovered','Deceased') NOT NULL,
+  `status` enum('Positive','Recovered','Dead') NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -49,7 +49,7 @@ INSERT INTO `patients` (`id`, `name`, `age`, `gender`, `address`, `phone`, `stat
 (3, 'Indah', 19, 'Female', 'Bandung', '081256789087', 'Recovered', '2025-01-15 07:05:39', '2025-01-15 07:05:39'),
 (4, 'Kevin', 24, 'Male', 'Bogor', '085690845637', 'Recovered', '2025-01-15 07:05:39', '2025-01-15 07:05:39'),
 (5, 'Lucao', 22, 'Male', 'Jakarta', '088909809080', 'Recovered', '2025-01-15 07:05:39', '2025-01-15 07:05:39'),
-(6, 'Clara', 31, 'Female', 'Jakarta', '085778909876', 'Deceased', '2025-01-15 07:05:39', '2025-01-15 07:05:39');
+(6, 'Clara', 31, 'Female', 'Jakarta', '085778909876', 'Dead', '2025-01-15 07:05:39', '2025-01-15 07:05:39');
 
 --
 -- Indexes for dumped tables
