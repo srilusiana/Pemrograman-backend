@@ -1,6 +1,6 @@
 // Menggunakan sintaks ES6 untuk import express dan router
 import express from 'express';
-import router from './routes/api.js';  // Pastikan path ini benar
+import router from './routes/api.js'; 
 
 console.log("Router path:", './routes/api.js');
 
