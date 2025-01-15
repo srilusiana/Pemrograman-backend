@@ -1,12 +1,12 @@
 // Import konfigurasi database
 import db from "../config/database.js";
 
-// Definisi class Student untuk mengelola operasi database terkait tabel 'students'
-class Student {
-  // Method untuk mendapatkan semua data siswa
+// Definisi class Patient untuk mengelola operasi database terkait tabel 'patients'
+class Patient {
+  // Method untuk mendapatkan semua data pasien
   static all() {
     return new Promise((resolve, reject) => {
-      const sql = "SELECT * FROM students"; // Query untuk mengambil semua data
+      const sql = "SELECT * FROM patients"; // Query untuk mengambil semua data
       db.query(sql, (err, results) => {
         if (err) reject(err); // Tangani error jika terjadi kesalahan saat eksekusi query
         resolve(results); // Resolusi promise dengan hasil query
@@ -14,10 +14,10 @@ class Student {
     });
   }
 
-  // Method untuk menambahkan data siswa baru
+  // Method untuk menambahkan data pasien baru
   static create(data) {
     return new Promise((resolve, reject) => {
-      const sql = "INSERT INTO students SET ?"; // Query untuk insert data siswa
+      const sql = "INSERT INTO patients SET ?"; // Query untuk insert data pasien
       db.query(sql, data, (err, results) => {
         if (err) {
           reject(err); // Tangani error jika terjadi kesalahan
@@ -30,48 +30,48 @@ class Student {
           return;
         }
 
-        // Resolusi promise dengan data siswa yang ditambahkan
+        // Resolusi promise dengan data pasien yang ditambahkan
         resolve({ id: results.insertId, ...data });
       });
     });
   }
 
-  // Method untuk memperbarui data siswa berdasarkan ID
+  // Method untuk memperbarui data pasien berdasarkan ID
   static update(id, updatedData) {
     return new Promise((resolve, reject) => {
-      const sql = "UPDATE students SET ? WHERE id = ?"; // Query untuk update data siswa
+      const sql = "UPDATE patients SET ? WHERE id = ?"; // Query untuk update data pasien
       db.query(sql, [updatedData, id], (err, results) => {
         if (err) reject(err); // Tangani error jika terjadi kesalahan
-        if (results.affectedRows === 0) reject(new Error("Student not found")); // Validasi jika data tidak ditemukan
+        if (results.affectedRows === 0) reject(new Error("Patient not found")); // Validasi jika data tidak ditemukan
         resolve({ id, ...updatedData }); // Resolusi promise dengan data yang diperbarui
       });
     });
   }
 
-  // Method untuk menghapus data siswa berdasarkan ID
+  // Method untuk menghapus data pasien berdasarkan ID
   static destroy(id) {
     return new Promise((resolve, reject) => {
-      const sql = "DELETE FROM students WHERE id = ?"; // Query untuk menghapus data siswa
+      const sql = "DELETE FROM patients WHERE id = ?"; // Query untuk menghapus data pasien
       db.query(sql, id, (err, results) => {
         if (err) reject(err); // Tangani error jika terjadi kesalahan
-        if (results.affectedRows === 0) reject(new Error("Student not found")); // Validasi jika data tidak ditemukan
-        resolve({ message: `Student with ID ${id} deleted successfully` }); // Resolusi promise dengan pesan sukses
+        if (results.affectedRows === 0) reject(new Error("Patient not found")); // Validasi jika data tidak ditemukan
+        resolve({ message: `Patient with ID ${id} deleted successfully` }); // Resolusi promise dengan pesan sukses
       });
     });
   }
 
-  // Method untuk mendapatkan data siswa berdasarkan ID
+  // Method untuk mendapatkan data pasien berdasarkan ID
   static find(id) {
     return new Promise((resolve, reject) => {
-      const sql = "SELECT * FROM students WHERE id = ?"; // Query untuk mendapatkan data siswa tertentu
+      const sql = "SELECT * FROM patients WHERE id = ?"; // Query untuk mendapatkan data pasien tertentu
       db.query(sql, id, (err, results) => {
         if (err) reject(err); // Tangani error jika terjadi kesalahan
-        if (results.length === 0) reject(new Error("Student not found")); // Validasi jika data tidak ditemukan
-        resolve(results[0]); // Resolusi promise dengan data siswa yang ditemukan
+        if (results.length === 0) reject(new Error("Patient not found")); // Validasi jika data tidak ditemukan
+        resolve(results[0]); // Resolusi promise dengan data pasien yang ditemukan
       });
     });
   }
 }
 
-// Ekspor class Student untuk digunakan di file lain
-export default Student;
+// Ekspor class Patient untuk digunakan di file lain
+export default Patient;
